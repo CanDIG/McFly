@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>McFly Uploader</title>
+    <link rel="icon" href="./public/images/octane-icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/stylesheets/style2.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </head>
+  <body ng-app="mcfly" ng-controller="MainCtrl" ng-cloak>
+    <div class="visible-xs" id="mobile-topbar"><img id="logo" src="public/images/octane-motion2.png">
+      <div id="branding">McFly</div><i class="fa fa-bars" id="mobile-menu-trigger"></i>
+    </div>
+    <div class="visible-xs collapsed-container" id="mobile-topbar-expanded">
+      <h3 id="mobile-account-trigger">Account<i class="fa fa-angle-down" aria-hidden="true"></i></h3>
+      <h3 id="mobile-instruction-trigger">Instructions<i class="fa fa-angle-down" aria-hidden="true"></i></h3>
+      <div class="collapsed-container" id="mobile-instruction-container">
+        <h5>Uploading Files</h5>
+        <p>To upload a file, either drag it in into the 'file upload' box or click the 'Browse' button. The file you upload will be stored in a user-specific directory. A list of files that have been uploaded in the current session is shown in the bottom half of the window. If you upload the same named file from a previous session, there is currently no warning and the new file will overwrite the old file. If you would like a list of what you have already uploaded, please let us know and we will send that to you on email. Currently, we do not display the names of files uploaded previously as an extra security measure. To cancel the upload of a file or remove an uploaded file from the queue, simply click on the 'X' right of the file name in the 'Uploads' box.</p>
+        <h5>Account Information</h5>
+        <p>To change your password or any other information associated with your account, click on your name in the top right corner of the screen and choose 'Account Settings'.</p>
+        <p>To logout click on your name in the top right corner of the screen and click 'Logout'.</p>
+      </div>
+      <h3 id="mobile-about-trigger">About McFly<i class="fa fa-angle-down" aria-hidden="true"></i></h3>
+      <div class="collapsed-container" id="mobile-about-container">
+        <p>McFly is a file uploader run by the Princess Margaret Bioinformatics Core. Federated authentication is run locally and files are stored in user-specific directories.</p>
+      </div>
+      <h3 id="mobile-contact-trigger">Contact<i class="fa fa-angle-down" aria-hidden="true"></i></h3>
+      <div class="collapsed-container" id="mobile-contact-container">
+        <h5>Issues or questions?</h5>
+        <p>Email Carl Virtanen at cvirtane@uhnresearch.ca for assistance.</p>
+      </div>
+    </div>
+    <header class="hidden-xs" id="">
+      <div id="topbar"><img id="logo" src="public/images/octane-motion2.png">
+        <div class="content-container">
+          <div class="row">
+            <div class="col-xs-2" id="branding">McFly</div>
+            <div class="col-xs-5 pull-right" id="user-profile">
+              <div class="dropdown"><span></span><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+            </div>
+          </div>
+      </div>
+      <div id="menu">
+        <div class="content-container">
+          <ul>
+            <li id="instructions-trigger"><a href="#">Instructions</a></li>
+            <li id="about-trigger"><a href="#">About McFly</a></li>
+            <li id="contact-trigger"><a href="#">Contact</a></li>
+          </ul><i class="fa fa-times" id="close-trigger" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div id="menu-dropdown">
+        <div class="content-container">
+          <div id="instructions">
+            <h3>Instructions</h3>
+            <div class="row">
+              <div class="col-sm-6">
+                <h4>Uploading Files</h4>
+                <p>To upload a file, either drag in into the 'file upload' box or click the 'Browse' button. The file stored in a user-specific  directory.</p>
+                <p>To cancel the upload of a file or remove an uploaded file from the queue, simply click on the 'X' right of the file name in the 'Uploads' box.</p>
+              </div>
+              <div class="col-sm-6">
+                <h4>Account Information</h4>
+                <p>To change your password or any other information associated with your account, click on your name in the top right corner of the screen and choose 'Account Settings'.</p>
+                <p>To logout click on your name in the top right corner of the screen and click 'Logout'.</p>
+              </div>
+            </div>
+          </div>
+          <div id="about">
+            <h3>About McFly</h3>
+            <p>McFly is a file uploader run by the Princess Margaret Bioinformatics Core. Federated authentication is run locally and files are stored in user-specific directories.</p>
+            <div class="row"><a href="http://www.uhn.ca/PrincessMargaret" target="_blank"><img src="public/images/PMCC-logo.png"></a><a href="https://oicr.on.ca/" target="_blank"><img src="public/images/oicr-logo.gif"></a></div>
+          </div>
+          <div id="contact">
+            <h3>Contact</h3>
+            <h4>Issues or questions?</h4>
+            <p>Email Qun Jin at qjin@uhnresearch.ca for assistance.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="main-body" style="overflow-y: scroll">
+        <div id="page-body">
+                    <div class="content-container">
+                      <div class="file-error alert alert-warning alert-dismissable" ng-show="showError" ng-class="{fade: doFade}">{{errorMessage}}</div>
+                      <div id="file-uploader" ng-file-over="" nv-file-drop="" uploader="uploader" style="border: 3px dashed #d8d8d8; background-color:#f4f4f4; margin-bottom: 80px; text-align: center; padding: 50px"><img src="public/images/upload-icon.svg" style="padding-bottom: 15px"/>
+                        <h3>Simply drag and drop files here or 
+                          <label>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple="" nv-file-drop=""/><span> <b> 
+                                <u>browse</u></b></span>
+                          </label> to upload.
+                        </h3><small>Allowed file types: vcf, zip, doc, docx, xls, xlsx, gz and plaintext (txt)</small>
+                      </div>
+                     <div class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3" ng-model="uploader.queue" ng-repeat="item in uploader.queue">
+                          <div class="file uploading"><i class="fa fa-file-text-o file-image" aria-hidden="true"></i>
+                            <h3>{{item.file.name}}</h3>
+                            <h5 class="file-size">{{item.file.size/1024/1024|number:2}} MB</h5>
+                            <div class="divider"></div>
+                            <div class="progress">
+                              <div class="progress-bar" role="progressbar" ng-style="{'width': item.progress + '%'}"></div>
+                            </div><span class="error-msg" ng-show="item.isCancel"> <i class="fa fa-exclamation-circle" aria-hidden="true">| File upload cancelled. </i></span><span class="error-msg" ng-show="item.isError &amp;&amp; !item.isTimeout"> <i class="fa fa-exclamation-circle" aria-hidden="true"> </i>
+                              <Error>while uploading.</Error></span><span class="error-msg" ng-show="item.fileExists"> <i class="fa fa-exclamation-circle" aria-hidden="true"> </i>File with this name already exists. </span><span class="success-msg" ng-show="item.isSuccess"><i class="fa fa-check-circle" aria-hidden="true"></i>Completed</span>
+                            <div class="file-options" ng-click="item.remove();"><i class="fa fa-trash" aria-hidden="true"></i>
+                              <h5>Delete</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+        </div>
+    </div>
+  </body>
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <!--Angular Dependencies -->
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-file-upload/dist/angular-file-upload.min.js"></script>
+  <script src="public/javascripts/angularApp.js"></script>
+  <script src="public/javascripts/script.js"></script>
+</html>

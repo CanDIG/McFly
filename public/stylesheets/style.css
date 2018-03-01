@@ -1,0 +1,110 @@
+body {
+/*  padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #34495E !important;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.site-title {
+  color: #FFF;
+  margin-left: 16px;
+}
+
+/* Applies to additional divs inside of .side-bar 
+http://stackoverflow.com/questions/7694852/change-font-color-across-divs-and-spans
+*/
+.side-bar .side-bar-text {
+  color: #FFF;
+}
+
+.my-drop-zone {
+	border: dotted 3px lightgray; 
+	height: 200px;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Good looking file upload button */ 
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.glyphicon.glyphicon-cloud-upload {
+  font-size: 150%;
+}
+
+.page-header {
+  margin-top: 0; 
+}
+
+.page-header-index {
+  margin-bottom: 0; 
+}
+
+.scroll-table {
+  max-height: 300px;
+  overflow-y: auto; 
+}
+
+.scroll-uploads-table {
+  max-height: 600px;
+  overflow-y: auto; 
+}
+
+/**** SO Stuff 
+http://stackoverflow.com/questions/19089384/twitter-bootstrap-3-two-columns-full-height
+****/ 
+html,body,.container {
+    height:100%;
+}
+.container {
+  display:table;
+  width: 100%;
+  margin-top: -50px;
+  padding: 0 0 0 0;
+  box-sizing: border-box;
+}
+
+.row.main-row {
+  height: 100%;
+  display: table-row;
+}
+
+.col-md-3.no-float, .col-md-9.no-float {
+  float: none; 
+}
+
+.col-md-3.side-bar {
+  display: table-cell;
+  background: #2C3E50;
+  width: 25%;
+}
+
+.col-md-9.page-content {
+  padding-top: 30px; 
+  display: table-cell;
+  background: #34495E;
+  width: 75%;
+}
+
+/****End of SO Sidebar stuff ****/ 
+
+
