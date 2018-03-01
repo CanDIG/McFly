@@ -28,7 +28,6 @@ func ReadData(file string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	fmt.Printf("%v", csvData)
 	objects := MakeObjects(csvData)
 	InsertFromFile(objects)
 }
@@ -76,4 +75,22 @@ func InsertFromFile(data []interface{}) {
 //RemoveRow removed the top row from the data
 func RemoveRow(data [][]string) [][]string {
 	return data[1:]
+}
+
+//MakeFileFromData exports the data in tsv file of type .txt
+func MakeFileFromData(name string, data []map[string]string) {
+	// f, err := os.OpenFile(name, os.O_WRONLY|os.O_CREATE, 0666)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+	//stringToFile := ""
+	for _, result := range data {
+		for k, v := range result {
+			fmt.Printf("%v : ", k)
+			fmt.Printf("%v\n", v)
+		}
+	}
+
+	//f.Write()
 }

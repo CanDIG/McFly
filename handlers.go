@@ -54,4 +54,5 @@ var genericListJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *htt
 	if err := json.NewEncoder(w).Encode(objects); err != nil {
 		panic(err)
 	}
+	MakeFileFromData("", objects)
 })
