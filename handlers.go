@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -43,4 +44,14 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	}
 	ReadData(newFileName)
 	return
+})
+
+//GenericListJSON returns a comma seperated list of generic JSON objects stored in objects array
+var genericListJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	objects := GetAll("data")
+	if err := json.NewEncoder(w).Encode(objects); err != nil {
+		panic(err)
+	}
 })

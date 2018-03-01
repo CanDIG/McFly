@@ -28,7 +28,8 @@ func ReadData(file string) {
 		os.Exit(1)
 	}
 	fmt.Printf("%v", csvData)
-	MakeObjects(csvData)
+	objects := MakeObjects(csvData)
+	InsertFromFile(objects)
 }
 
 //MakeObjects creates the objects that can be stored in the database
@@ -54,4 +55,11 @@ func GetHeaders(data [][]string) []string {
 //CleanData returns only the data and removes the headers
 func CleanData(data [][]string) [][]string {
 	return data[5:]
+}
+
+//InsertFromFile inserts data records into the db
+func InsertFromFile(data []interface{}) {
+	for _, record := range data {
+		Insert("data", record)
+	}
 }

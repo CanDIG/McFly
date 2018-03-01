@@ -28,4 +28,12 @@ var routes = Routes{
 		"/mcfly/upload",
 		uploadHandler,
 	},
+	//List of JSON objects
+	///Authenticated
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/data",
+		genericListJSONHandler,
+	},
 }
