@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"strings"
 )
 
 //ReadData reads data from cvs file
@@ -34,8 +35,9 @@ func ReadData(file string) {
 
 //MakeObjects creates the objects that can be stored in the database
 func MakeObjects(data [][]string) []interface{} {
-	headers := GetHeaders(data)
 	data = CleanData(data)
+	headers := GetHeaders(data)
+	data = RemoveRow(data)
 	var objects []interface{}
 	for j := range data {
 		m := map[string]string{}
@@ -49,12 +51,19 @@ func MakeObjects(data [][]string) []interface{} {
 
 //GetHeaders returns the data headers
 func GetHeaders(data [][]string) []string {
-	return data[4]
+	return data[0]
 }
 
 //CleanData returns only the data and removes the headers
 func CleanData(data [][]string) [][]string {
-	return data[5:]
+	for {
+		if strings.Contains(data[0][0], "#") {
+			data = RemoveRow(data)
+		} else {
+			break
+		}
+	}
+	return data
 }
 
 //InsertFromFile inserts data records into the db
@@ -62,4 +71,9 @@ func InsertFromFile(data []interface{}) {
 	for _, record := range data {
 		Insert("data", record)
 	}
+}
+
+//RemoveRow removed the top row from the data
+func RemoveRow(data [][]string) [][]string {
+	return data[1:]
 }
