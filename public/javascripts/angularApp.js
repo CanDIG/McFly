@@ -14,27 +14,6 @@ app.controller('MainCtrl', ['$scope','$timeout', 'FileUploader', function($scope
         fn: function(item, options) {
             var fileCheck = false;
             switch (item.name.split('.').pop()) {
-                case 'vcf':
-                    fileCheck = true;
-                    break;
-                case 'zip':
-                    fileCheck = true;
-                    break;
-                case 'doc':
-                    fileCheck = true;
-                    break;
-                case 'docx':
-                    fileCheck = true;
-                    break;
-                case 'xls':
-                    fileCheck = true;
-                    break;
-                case 'xlsx':
-                    fileCheck = true;
-                    break;
-                case 'gz':
-                    fileCheck = true;
-                    break;
                 case 'txt':
                     fileCheck = true;
                     break;

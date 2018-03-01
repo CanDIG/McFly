@@ -28,11 +28,12 @@ var indexHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request)
 
 var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	file, header, err := r.FormFile("file")
-	if _, err := os.Stat("./uploads/" + header.Filename); !os.IsNotExist(err) {
+	newFileName := header.Filename[0:len(header.Filename)-4] + ".csv"
+	if _, err := os.Stat("./uploads/" + newFileName); !os.IsNotExist(err) {
 		w.WriteHeader(409)
 		return
 	}
-	f, err := os.OpenFile("./uploads/"+header.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	f, err := os.OpenFile("./uploads/"+newFileName, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -40,5 +41,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		fmt.Println(err)
 	}
+	ReadData(newFileName)
 	return
 })
