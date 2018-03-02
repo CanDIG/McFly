@@ -87,21 +87,25 @@ func MakeFileFromData(name string, data []map[string]string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
 	stringToFile := ""
 	header := true
+	var keys []string
 	for _, result := range data {
 		if header {
+			keys = make([]string, 0)
 			for k := range result {
 				if k != "_id" {
 					stringToFile += k + "\t"
+					keys = append(keys, k)
 				}
 			}
 			stringToFile += "\n"
 		}
 		header = false
-		for k, v := range result {
-			if k != "_id" {
-				stringToFile += v + "\t"
+		for _, v := range keys {
+			if v != "_id" {
+				stringToFile += result[v] + "\t"
 			}
 		}
 		stringToFile += "\n"
