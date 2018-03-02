@@ -79,18 +79,36 @@ func RemoveRow(data [][]string) [][]string {
 
 //MakeFileFromData exports the data in tsv file of type .txt
 func MakeFileFromData(name string, data []map[string]string) {
-	// f, err := os.OpenFile(name, os.O_WRONLY|os.O_CREATE, 0666)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	os.Exit(1)
-	// }
-	//stringToFile := ""
-	for _, result := range data {
-		for k, v := range result {
-			fmt.Printf("%v : ", k)
-			fmt.Printf("%v\n", v)
-		}
+	if len(data) == 0 {
+		return
 	}
+	f, err := os.OpenFile("./"+name, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	stringToFile := ""
+	header := true
+	for _, result := range data {
+		if header {
+			for k := range result {
+				if k != "_id" {
+					stringToFile += k + "\t"
+				}
+			}
+			stringToFile += "\n"
+		}
+		header = false
+		for k, v := range result {
+			if k != "_id" {
+				stringToFile += v + "\t"
+			}
+		}
+		stringToFile += "\n"
+	}
+	bytes := []byte(stringToFile)
 
-	//f.Write()
+	f.Write(bytes)
+	f.Close()
+	return
 }
