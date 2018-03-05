@@ -20,7 +20,7 @@ func ReadData(file string) {
 
 	reader := csv.NewReader(csvFile)
 
-	reader.Comma = '\t' // Use tab-delimited instead of comma <---- here!
+	reader.Comma = '\t' // Use tab-delimited instead of comma
 
 	reader.FieldsPerRecord = -1
 
@@ -31,6 +31,7 @@ func ReadData(file string) {
 	}
 	csvData = CleanData(csvData)
 
+	//This is what determines the type of file (kind of, needs to be better [consider using file name to get type])
 	if csvData[0][1] == "AGE" {
 		objects := MakePatients(csvData)
 		InsertPatientFromFile(objects)
