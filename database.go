@@ -38,9 +38,9 @@ func Insert(collection string, object interface{}) bool {
 }
 
 //GetAll returns an array of all objects in a collection
-func GetAll(collection string) []map[string]string {
+func GetAll(collection string) []Record {
 	c := setCollection(collection)
-	list := make([]map[string]string, 1000)
+	var list []Record
 	err := c.Find(nil).All(&list)
 	if err != nil {
 		log.Fatal(err)

@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"reflect"
 	"strings"
 )
 
@@ -33,17 +34,19 @@ func ReadData(file string) {
 }
 
 //MakeObjects creates the objects that can be stored in the database
-func MakeObjects(data [][]string) []interface{} {
+func MakeObjects(data [][]string) []Record {
 	data = CleanData(data)
 	headers := GetHeaders(data)
 	data = RemoveRow(data)
-	var objects []interface{}
+	var objects []Record
 	for j := range data {
 		m := map[string]string{}
 		for i := range data[j] {
 			m[headers[i]] = data[j][i]
 		}
-		objects = append(objects, m)
+
+		record := TranslateData(m)
+		objects = append(objects, record)
 	}
 	return objects
 }
@@ -66,7 +69,7 @@ func CleanData(data [][]string) [][]string {
 }
 
 //InsertFromFile inserts data records into the db
-func InsertFromFile(data []interface{}) {
+func InsertFromFile(data []Record) {
 	for _, record := range data {
 		Insert("data", record)
 	}
@@ -78,7 +81,7 @@ func RemoveRow(data [][]string) [][]string {
 }
 
 //MakeFileFromData exports the data in tsv file of type .txt
-func MakeFileFromData(name string, data []map[string]string) {
+func MakeFileFromData(name string, data []Record) {
 	if len(data) == 0 {
 		return
 	}
@@ -89,30 +92,89 @@ func MakeFileFromData(name string, data []map[string]string) {
 	}
 
 	stringToFile := ""
-	header := true
-	var keys []string
-	for _, result := range data {
-		if header {
-			keys = make([]string, 0)
-			for k := range result {
-				if k != "_id" {
-					stringToFile += k + "\t"
-					keys = append(keys, k)
-				}
-			}
-			stringToFile += "\n"
+	r := Record{}
+	v := reflect.ValueOf(r)
+	for i := 0; i < v.NumField(); i++ {
+		tag, _ := reflect.ValueOf(r).Type().FieldByName(v.Type().Field(i).Name)
+		stringToFile += string(tag.Tag.Get("json")) + "\t"
+	}
+	stringToFile = stringToFile[:len(stringToFile)-1]
+	stringToFile += "\n"
+
+	for _, k := range data {
+		h := reflect.ValueOf(k)
+		for i := 0; i < v.NumField(); i++ {
+			value := fmt.Sprintf("%v", h.Field(i))
+			stringToFile += value + "\t"
 		}
-		header = false
-		for _, v := range keys {
-			if v != "_id" {
-				stringToFile += result[v] + "\t"
-			}
-		}
+		stringToFile = stringToFile[:len(stringToFile)-1]
 		stringToFile += "\n"
 	}
+	stringToFile = stringToFile[:len(stringToFile)-1]
 	bytes := []byte(stringToFile)
 
 	f.Write(bytes)
 	f.Close()
 	return
+}
+
+//TranslateData is a function that translate into the recordobejct
+func TranslateData(m map[string]string) Record {
+	r := Record{}
+	tag, _ := reflect.ValueOf(r).Type().FieldByName("Age")
+	r.Age, _ = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("AngiolymphaticInvasion")
+	r.AngiolymphaticInvasion = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("ClinicalAssessment")
+	r.ClinicalAssessment = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("DfsMonths")
+	r.DfsMonths = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("DfsStatus")
+	r.DfsStatus = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("Ethnicity")
+	r.Ethnicity = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("LostToFollowup")
+	r.LostToFollowup = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("LymphNodesExamined")
+	r.LymphNodesExamined = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("MethodOfInitialPathDiagnosis")
+	r.MethodOfInitialPathDiagnosis = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("MethodOfInitialPathDiagnosisOther")
+	r.MethodOfInitialPathDiagnosisOther = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("NewTumorEventAfterInitialTreatment")
+	r.NewTumorEventAfterInitialTreatment = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("NewTumorEventOtherSite")
+	r.NewTumorEventOtherSite = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("OsMonths")
+	r.OsMonths = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("OsStatus")
+	r.OsStatus = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("PathologicDistantSpread")
+	r.PathologicDistantSpread = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("PathologicSpreadIncidentalProstateCancer")
+	r.PathologicSpreadIncidentalProstateCancer = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("PatientID")
+	r.PatientID = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("PrimaryTumorPathologicSpread")
+	r.PrimaryTumorPathologicSpread = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("ProspectiveCollection")
+	r.ProspectiveCollection = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("Race")
+	r.Race = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("Sex")
+	r.Sex = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("SmokingHistory")
+	r.SmokingHistory = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("SmokingPackYears")
+	r.SmokingPackYears, _ = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("SmokingYearStarted")
+	r.SmokingYearStarted = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("SmokingYearStopped")
+	r.SmokingYearStopped = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("Subtype")
+	r.Subtype = m[string(tag.Tag.Get("json"))]
+	tag, _ = reflect.ValueOf(r).Type().FieldByName("YearOfDiagnosis")
+	r.YearOfDiagnosis = m[string(tag.Tag.Get("json"))]
+
+	return r
 }
