@@ -37,17 +37,6 @@ func Insert(collection string, object interface{}) bool {
 	return true
 }
 
-//GetAll returns an array of all objects in a collection
-func GetAll(collection string) []Record {
-	c := setCollection(collection)
-	var list []Record
-	err := c.Find(nil).All(&list)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return list
-}
-
 //RemoveAll will empty a collection
 func RemoveAll(collection string) bool {
 	c := setCollection(collection)

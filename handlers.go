@@ -14,12 +14,6 @@ var err error
 
 //Index returns when the main page is called and returns HTML indicating the availale paths
 var indexHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// tplfile, err := jade.ParseFile("./views/index.jade")
-	// //tplstring, _ := jade.Parse(tplfile, "doctype 5: html: body: p Hello world!")
-	// if err != nil {
-	// 	fmt.Printf("%v", err)
-	// 	return
-	// }
 	tpl, _ := template.New("").Delims("[[", "]]").ParseFiles("./views/index.html")
 	//temp, _ := tpl.Parse(tplfile)
 	tpl.ExecuteTemplate(w, "index.html", nil)
@@ -46,13 +40,35 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	return
 })
 
-//GenericListJSON returns a comma seperated list of generic JSON objects stored in objects array
-var genericListJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+//patientJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
+var patientJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("data")
+	objects := GetAllPatients("patients")
 	if err := json.NewEncoder(w).Encode(objects); err != nil {
 		panic(err)
 	}
-	MakeFileFromData("results.txt", objects)
+	MakePatientFileFromData("results.txt", objects)
+})
+
+//sampleJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
+var sampleJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	objects := GetAllSamples("samples")
+	if err := json.NewEncoder(w).Encode(objects); err != nil {
+		panic(err)
+	}
+	MakeSampleFileFromData("results.txt", objects)
+})
+
+//mutationJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
+var mutationJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	objects := GetAllMutations("mutations")
+	if err := json.NewEncoder(w).Encode(objects); err != nil {
+		panic(err)
+	}
+	MakeMutationFileFromData("results.txt", objects)
 })
