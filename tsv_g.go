@@ -3,11 +3,37 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strings"
 )
 
 var collection string
+
+//ReadMetaData reads data from meta files
+func ReadMetaData(file string) {
+	b, err := ioutil.ReadFile("./uploads/" + file)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	s := string(b)
+	metaObject := MakeMetaObjects(s)
+	//This is what determines the type of file (kind of, needs to be better [consider using file name to get type])
+	if file == "meta_clinical_patient.txt" {
+		collection = "patientsmeta"
+	} else if file == "meta_clinical_sample.txt" {
+		collection = "samplesmeta"
+	} else if file == "meta_mutations_extended.txt" {
+		collection = "mutationsmeta"
+	} else if file == "meta_study.txt" {
+		collection = "studymeta"
+	}
+
+	objects := make([]interface{}, 0)
+	objects = append(objects, metaObject)
+	InsertFromFile(objects, collection)
+}
 
 //ReadData reads data from cvs file
 func ReadData(file string) {
@@ -57,6 +83,26 @@ func MakeObjects(data [][]string) []interface{} {
 		objects = append(objects, m)
 	}
 	return objects
+}
+
+//MakeMetaObjects creates meta object to return
+func MakeMetaObjects(s string) interface{} {
+	m := map[string]string{}
+	for strings.Index(s, ":") != -1 {
+		i := strings.Index(s, ":")
+		key := s[:i]
+		s = s[i+2:]
+		j := strings.Index(s, "\n")
+		if j == -1 {
+			value := s
+			m[key] = value
+			break
+		}
+		value := s[:j]
+		s = s[j+1:]
+		m[key] = value
+	}
+	return m
 }
 
 //GetHeaders returns the data headers
@@ -162,6 +208,27 @@ func MakeSFileFromData(name string, data []map[string]string, headers []string) 
 		f.Write(bytes)
 		stringToFile = ""
 	}
+	f.Close()
+	return
+}
+
+//MakeMFileFromData exports the meta data
+func MakeMFileFromData(name string, data []map[string]string, headers []string) {
+	if len(data) == 0 {
+		return
+	}
+	f, err := os.OpenFile("./"+name, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	printString := ""
+	for _, key := range headers {
+		printString += key + ": " + data[0][key] + "\n"
+	}
+	printString = printString[:len(printString)-1]
+	bytes := []byte(printString)
+	f.Write(bytes)
 	f.Close()
 	return
 }

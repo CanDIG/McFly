@@ -1,0 +1,5 @@
+samplesmetaarray:
+  - cancer_study_identifier
+  - genetic_alteration_type
+  - datatype
+  - data_filename
