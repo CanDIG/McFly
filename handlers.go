@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -54,85 +53,75 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 var patientJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("patients")
-	if err := json.NewEncoder(w).Encode(objects); err != nil {
-		panic(err)
-	}
-	//MakePatientFileFromData("results.txt", objects)
-	MakeSFileFromData("results.txt", objects, Arrays.PatientConf.PatientsArray)
+	w.Write([]byte("patients file created"))
+
+	MakeAFile("patients", "data_clinical_patient.txt", Arrays.PatientConf.PatientsArray, true)
 })
 
 //sampleJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var sampleJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("samples")
-	if err := json.NewEncoder(w).Encode(objects); err != nil {
-		panic(err)
-	}
-	//MakeSampleFileFromData("results.txt", objects)
-	MakeSFileFromData("results.txt", objects, Arrays.SampleConf.SamplesArray)
+	w.Write([]byte("samples file created"))
+
+	MakeAFile("samples", "data_clinical_sample.txt", Arrays.SampleConf.SamplesArray, true)
 })
 
 //mutationJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var mutationJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("mutations")
-	// if err := json.NewEncoder(w).Encode(objects); err != nil {
-	// 	panic(err)
-	// }
-	w.Write([]byte("results.txt created"))
-	//MakeMutationFileFromData("results.txt", objects)
-	MakeSFileFromData("results.txt", objects, Arrays.MutationConf.MutationsArray)
+	w.Write([]byte("mutations file created"))
+
+	MakeAFile("mutations", "data_mutations_extended.txt", Arrays.MutationConf.MutationsArray, true)
 })
 
 //patientJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var patientmetaJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("patientsmeta")
-	if err := json.NewEncoder(w).Encode(objects); err != nil {
-		panic(err)
-	}
-	//MakePatientFileFromData("results.txt", objects)
-	MakeMFileFromData("results.txt", objects, Arrays.PatientMetaConf.PatientsMetaArray)
+	w.Write([]byte("patient metadata file created"))
+
+	MakeAFile("patientsmeta", "meta_clinical_patient.txt", Arrays.PatientMetaConf.PatientsMetaArray, false)
 })
 
 //sampleJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var samplemetaJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("samplesmeta")
-	if err := json.NewEncoder(w).Encode(objects); err != nil {
-		panic(err)
-	}
-	//MakeSampleFileFromData("results.txt", objects)
-	MakeMFileFromData("results.txt", objects, Arrays.SampleMetaConf.SamplesMetaArray)
+	w.Write([]byte("sample metadata file created"))
+
+	MakeAFile("samplesmeta", "meta_clinical_sample.txt", Arrays.SampleMetaConf.SamplesMetaArray, false)
 })
 
 //mutationJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var mutationmetaJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("mutationsmeta")
-	// if err := json.NewEncoder(w).Encode(objects); err != nil {
-	// 	panic(err)
-	// }
-	w.Write([]byte("results.txt created"))
-	//MakeMutationFileFromData("results.txt", objects)
-	MakeMFileFromData("results.txt", objects, Arrays.MutationMetaConf.MutationsMetaArray)
+	w.Write([]byte("mutation metadata file created"))
+
+	MakeAFile("mutationsmeta", "meta_mutations_extended.txt", Arrays.MutationMetaConf.MutationsMetaArray, false)
 })
 
 //mutationJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var studymetaJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAll("studymeta")
-	// if err := json.NewEncoder(w).Encode(objects); err != nil {
-	// 	panic(err)
-	// }
-	w.Write([]byte("results.txt created"))
-	//MakeMutationFileFromData("results.txt", objects)
-	MakeMFileFromData("results.txt", objects, Arrays.StudyConf.StudyArray)
+	w.Write([]byte("study metadata file created"))
+
+	MakeAFile("studymeta", "meta_study.txt", Arrays.StudyConf.StudyArray, false)
+})
+
+var makeAllHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Creating all files"))
+
+	MakeAFile("patients", "data_clinical_patient.txt", Arrays.PatientConf.PatientsArray, true)
+	MakeAFile("samples", "data_clinical_sample.txt", Arrays.SampleConf.SamplesArray, true)
+	MakeAFile("mutations", "data_mutations_extended.txt", Arrays.MutationConf.MutationsArray, true)
+	MakeAFile("patientsmeta", "meta_clinical_patient.txt", Arrays.PatientMetaConf.PatientsMetaArray, false)
+	MakeAFile("samplesmeta", "meta_clinical_sample.txt", Arrays.SampleMetaConf.SamplesMetaArray, false)
+	MakeAFile("mutationsmeta", "meta_mutations_extended.txt", Arrays.MutationMetaConf.MutationsMetaArray, false)
+	MakeAFile("studymeta", "meta_study.txt", Arrays.StudyConf.StudyArray, false)
 })

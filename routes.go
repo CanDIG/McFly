@@ -72,4 +72,10 @@ var routes = Routes{
 		"/mcfly/metastudy",
 		studymetaJSONHandler,
 	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/export",
+		makeAllHandler,
+	},
 }
