@@ -1,0 +1,7 @@
+patientsarray:
+ - PATIENT_ID
+ - GENDER
+ - AGE
+ - METASTASIS
+ - OS_STATUS
+ - OS_MONTHS

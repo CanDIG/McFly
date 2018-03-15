@@ -44,31 +44,35 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 var patientJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAllPatients("patients")
+	objects := GetAll("patients")
 	if err := json.NewEncoder(w).Encode(objects); err != nil {
 		panic(err)
 	}
-	MakePatientFileFromData("results.txt", objects)
+	//MakePatientFileFromData("results.txt", objects)
+	MakeSFileFromData("results.txt", objects, Arrays.PatientConf.PatientsArray)
 })
 
 //sampleJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var sampleJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAllSamples("samples")
+	objects := GetAll("samples")
 	if err := json.NewEncoder(w).Encode(objects); err != nil {
 		panic(err)
 	}
-	MakeSampleFileFromData("results.txt", objects)
+	//MakeSampleFileFromData("results.txt", objects)
+	MakeSFileFromData("results.txt", objects, Arrays.SampleConf.SamplesArray)
 })
 
 //mutationJSONHandler returns a comma seperated list of generic JSON objects stored in objects array
 var mutationJSONHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	objects := GetAllMutations("mutations")
-	if err := json.NewEncoder(w).Encode(objects); err != nil {
-		panic(err)
-	}
-	MakeMutationFileFromData("results.txt", objects)
+	objects := GetAll("mutations")
+	// if err := json.NewEncoder(w).Encode(objects); err != nil {
+	// 	panic(err)
+	// }
+	w.Write([]byte("results.txt created"))
+	//MakeMutationFileFromData("results.txt", objects)
+	MakeSFileFromData("results.txt", objects, Arrays.MutationConf.MutationsArray)
 })

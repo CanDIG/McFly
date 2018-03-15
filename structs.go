@@ -29,6 +29,8 @@ type PatientRecord struct {
 	DfsStatus                                string `json:"DFS_STATUS"`
 	DfsMonths                                string `json:"DFS_MONTHS"`
 	PathologicSpreadIncidentalProstateCancer string `json:"PATHOLOGIC_SPREAD_INCIDENTAL_PROSTATE_CANCER"`
+	Gender                                   string `json:"GENDER"`
+	Metastasis                               string `json:"METASTASIS"`
 }
 
 //SampleRecord type based on data_clinical_sample
@@ -52,6 +54,26 @@ type SampleRecord struct {
 	CompleteTCGAID                string `json:"COMPLETE_TCGA_ID"`
 	CancerTypeDetailed            string `json:"CANCER_TYPE_DETAILED"`
 	OncotreeCode                  string `json:"ONCOTREE_CODE"`
+	ERStatus                      string `json:"ER_STATUS"`
+	PRStatus                      string `json:"PR_STATUS"`
+	HER2Status                    string `json:"HER2_STATUS"`
+	TumorStage                    string `json:"TUMOR_STAGE"`
+	TumorT1Coded                  string `json:"TUMOR_T1_CODED"`
+	Nodes                         string `json:"NODES"`
+	NodeCoded                     string `json:"NODE_CODED"`
+	MetastasisCoded               string `json:"METASTASIS_CODED"`
+	ConvertedStage                string `json:"CONVERTED_STAGE"`
+	SurvivalDataForm              string `json:"SURVIVAL_DATA_FORM"`
+	PAM50Subtype                  string `json:"PAM50_SUBTYPE"`
+	SigclustUnsupervisedMRNA      string `json:"SIGCLUST_UNSUPERVISED_MRNA"`
+	SigclustIntrinsicMRNA         string `json:"SIGCLUST_INTRINSIC_MRNA"`
+	MirnaCluster                  string `json:"MIRNA_CLUSTER"`
+	MethylationCluster            string `json:"METHYLATION_CLUSTER"`
+	RPPACluster                   string `json:"RPPA_CLUSTER"`
+	CNCluster                     string `json:"CN_CLUSTER"`
+	IntegreatedClusterswithPAM50  string `json:"INTEGRATED_CLUSTERS_WITH_PAM50"`
+	IntegreatedClustersNoExp      string `json:"INTEGRATED_CLUSTERS_NO_EXP"`
+	IntegreatedClustersUnsupExp   string `json:"INTEGRATED_CLUSTERS_UNSUP_EXP"`
 }
 
 //MutationRecord type based on data_clinical_sample
@@ -96,4 +118,146 @@ type MutationRecord struct {
 	HGVSc                      string `json:"HGVSc"`
 	HGVSp                      string `json:"HGVSp"`
 	HGVSpShort                 string `json:"HGVSp_Short"`
+	// Transcript_ID
+	// RefSeq
+	// Protein_position
+	// Codons
+	// Hotspot
+	// ALLELE_NUM
+	// PICK
+	// UNIPARC
+	// n_depth
+	// ONCOTATOR_TRANSCRIPT_CHANGE_BEST_EFFECT
+	// MA:link.PDB
+	// Feature
+	// CLIN_SIG
+	// ONCOTATOR_DBSNP_RS
+	// Gene
+	// HGNC_ID
+	// ExAC_AF_AMR
+	// t_depth
+	// MA:FIS
+	// ONCOTATOR_REFSEQ_MRNA_ID_BEST_EFFECT
+	// ONCOTATOR_CODON_CHANGE_BEST_EFFECT
+	// DISTANCE
+	// SYMBOL_SOURCE
+	// type_wu
+	// type_WU
+	// ONCOTATOR_PROTEIN_POS_END
+	// Existing_variation
+	// SYMBOL
+	// ExAC_AF_SAS
+	// VARIANT_CLASS
+	// AA_MAF
+	// HIGH_INF_POS
+	// GENE_PHENO
+	// ExAC_AF_AFR
+	// ASN_MAF
+	// all_domains_wu
+	// all_domains_WU
+	// PHENO
+	// ONCOTATOR_VARIANT_CLASSIFICATION
+	// BIOTYPE
+	// transcript_name_wu
+	// transcript_name_WU
+	// MA:link.var
+	// AFR_MAF
+	// reference_wu
+	// reference_WU
+	// DOMAINS
+	// MOTIF_SCORE_CHANGE
+	// ONCOTATOR_UNIPROT_ENTRY_NAME
+	// ONCOTATOR_TRANSCRIPT_CHANGE
+	// Amino_acids
+	// ONCOTATOR_REFSEQ_PROT_ID_BEST_EFFECT
+	// EA_MAF
+	// Allele
+	// transcript_version_wu
+	// transcript_version_WU
+	// MA:FImpact
+	// cDNA_position
+	// chromosome_name_wu
+	// chromosome_name_WU
+	// ExAC_AF_NFE
+	// ONCOTATOR_PROTEIN_POS_END_BEST_EFFECT
+	// ONCOTATOR_PROTEIN_CHANGE_BEST_EFFECT
+	// transcript_source_wu
+	// transcript_source_WU
+	// MA:link.MSA
+	// SIFT
+	// ONCOTATOR_GENE_SYMBOL_BEST_EFFECT
+	// INTRON
+	// ONCOTATOR_EXON_AFFECTED
+	// TREMBL
+	// transcript_status_wu
+	// transcript_status_WU
+	// AMR_MAF
+	// stop_wu
+	// stop_WU
+	// ucsc_cons_wu
+	// ucsc_cons_WU
+	// transcript_species_wu
+	// transcript_species_WU
+	// ONCOTATOR_UNIPROT_ACCESSION_BEST_EFFECT
+	// EAS_MAF
+	// gene_name_wu
+	// gene_name_WU
+	// variant_wu
+	// variant_WU
+	// ONCOTATOR_PROTEIN_POS_START
+	// CANONICAL
+	// all_effects
+	// ExAC_AF_EAS
+	// start_wu
+	// start_WU
+	// GMAF
+	// MOTIF_NAME
+	// TSL
+	// amino_acid_change_wu
+	// amino_acid_change_WU
+	// SOMATIC
+	// MOTIF_POS
+	// IMPACT
+	// CDS_position
+	// annotation_errors_wu
+	// annotation_errors_WU
+	// strand_wu
+	// strand_WU
+	// ONCOTATOR_DBSNP_VAL_STATUS
+	// c_position_wu
+	// c_position_WU
+	// MA:protein.change
+	// ONCOTATOR_COSMIC_OVERLAPPING
+	// ONCOTATOR_REFSEQ_MRNA_ID
+	// ONCOTATOR_CODON_CHANGE
+	// ONCOTATOR_PROTEIN_CHANGE
+	// ONCOTATOR_VARIANT_CLASSIFICATION_BEST_EFFECT
+	// ONCOTATOR_EXON_AFFECTED_BEST_EFFECT
+	// ONCOTATOR_GENE_SYMBOL
+	// SWISSPROT
+	// ExAC_AF_FIN
+	// EUR_MAF
+	// deletion_substructures_wu
+	// deletion_substructures_WU
+	// Feature_type
+	// HGVS_OFFSET
+	// domain_wu
+	// domain_WU
+	// PolyPhen
+	// FILTER
+	// ONCOTATOR_UNIPROT_ENTRY_NAME_BEST_EFFECT
+	// ENSP
+	// ExAC_AF
+	// trv_type_wu
+	// trv_type_WU
+	// ONCOTATOR_REFSEQ_PROT_ID
+	// CCDS
+	// EXON
+	// ExAC_AF_OTH
+	// SAS_MAF
+	// ONCOTATOR_PROTEIN_POS_START_BEST_EFFECT
+	// Exon_Number
+	// MINIMISED
+	// ONCOTATOR_UNIPROT_ACCESSION
+	// PUBMED
 }

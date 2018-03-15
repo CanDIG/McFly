@@ -16,10 +16,15 @@ var keycloakserver string
 
 var goTest bool // true if unit tests are running
 
+//Arrays gives the arrays to print out
+var Arrays *Records
+
 func main() {
 	flag.StringVar(&localport, "p", "3000", "Specify which port to use")
 	flag.StringVar(&localhost, "host", "localhost", "Specify the name of the host")
 	flag.Parse()
+
+	Arrays = GetAllConfs()
 
 	server = "http://" + localhost + ":" + localport
 	DatabaseInit("mcfly", "mongodb://localhost:27017/")
