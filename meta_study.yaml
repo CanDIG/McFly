@@ -1,0 +1,9 @@
+studyarray:
+  - type_of_cancer
+  - cancer_study_identifier
+  - name
+  - short_name
+  - description
+  - citation
+  - pmid
+  - groups

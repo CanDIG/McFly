@@ -33,7 +33,49 @@ var routes = Routes{
 	Route{
 		"GenericListJSON",
 		"GET",
-		"/mcfly/data",
-		genericListJSONHandler,
+		"/mcfly/patients",
+		patientJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/samples",
+		sampleJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/mutations",
+		mutationJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/metapatients",
+		patientmetaJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/metasamples",
+		samplemetaJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/metamutations",
+		mutationmetaJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/metastudy",
+		studymetaJSONHandler,
+	},
+	Route{
+		"GenericListJSON",
+		"GET",
+		"/mcfly/export",
+		makeAllHandler,
 	},
 }
