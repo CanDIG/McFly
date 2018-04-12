@@ -5,3 +5,4 @@ patientsarray:
  - METASTASIS
  - OS_STATUS
  - OS_MONTHS
+headers: "#Patient Identifier	Person Gender	Diagnosis Age	Metastasis	Overall Survival Status	Overall Survival (Months)\n#Identifier to uniquely specify a patient.	Patient gender.	Age at which a condition or disease was first diagnosed.	Metastasis.	Overall patient survival status.	Overall survival in months since initial diagonosis.\n#STRING	STRING	NUMBER	STRING	STRING	NUMBER\n#1	1	1	1	1	1\n"

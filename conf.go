@@ -22,16 +22,19 @@ type Records struct {
 //SampleConf Config Object
 type SampleConf struct {
 	SamplesArray []string
+	Headers      string
 }
 
 //PatientConf Config Object
 type PatientConf struct {
 	PatientsArray []string
+	Headers       string
 }
 
 //MutationConf is a config object
 type MutationConf struct {
 	MutationsArray []string
+	Headers        string
 }
 
 //SampleMetaConf Config Object
@@ -95,7 +98,7 @@ func GetConfMutation(c *MutationConf, file string) *MutationConf {
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
 	}
-
+	c.Headers = "#McFly\n"
 	return c
 }
 
