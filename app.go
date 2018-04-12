@@ -27,7 +27,10 @@ func main() {
 	Arrays = GetAllConfs()
 
 	server = "http://" + localhost + ":" + localport
+	//for docker
 	DatabaseInit("mcfly", "mongodb://mongodb:27017/")
+	//for localhost
+	//DatabaseInit("mcfly", "mongodb://localhost:27017/")
 	router := NewRouter()
 	//Stats hosting on the constant port
 	log.Fatal(http.ListenAndServe(":"+localport, router))
