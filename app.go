@@ -27,7 +27,7 @@ func main() {
 	Arrays = GetAllConfs()
 
 	server = "http://" + localhost + ":" + localport
-	DatabaseInit("mcfly", "mongodb://localhost:27017/")
+	DatabaseInit("mcfly", "mongodb://0.0.0.0:27017/")
 	router := NewRouter()
 	//Stats hosting on the constant port
 	log.Fatal(http.ListenAndServe(":"+localport, router))
