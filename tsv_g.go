@@ -175,7 +175,7 @@ func MakeFileFromData(name string, data []map[string]string) {
 }
 
 //MakeSFileFromData exports the data in tsv file of type .txt
-func MakeSFileFromData(name string, data []map[string]string, headers []string) {
+func MakeSFileFromData(name string, data []map[string]string, headers []string, head string) {
 	if len(data) == 0 {
 		return
 	}
@@ -184,6 +184,8 @@ func MakeSFileFromData(name string, data []map[string]string, headers []string) 
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	bytes := []byte(head)
+	f.Write(bytes)
 
 	readableheaders := make([]string, 0)
 	stringToFile := ""
