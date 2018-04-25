@@ -28,7 +28,8 @@ func main() {
 
 	server = "http://" + localhost + ":" + localport
 	//for docker
-	DatabaseInit("mcfly", "mongodb://mongodb:27017/")
+	//DatabaseInit("mcfly", "mongodb://mongodb:27017/")
+	DatabaseInit("mcfly", "mongodb://127.0.0.1:27017/")
 	//for localhost
 	//DatabaseInit("mcfly", "mongodb://localhost:27017/")
 	router := NewRouter()
