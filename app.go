@@ -9,6 +9,7 @@ import (
 //hosting variables defined in flags
 var localhost string
 var localport string
+var mongo string
 var keycloakhost string
 var keycloakport string
 var server string
@@ -21,6 +22,7 @@ var Arrays *Records
 
 func main() {
 	flag.StringVar(&localport, "p", "3000", "Specify which port to use")
+	flag.StringVar(&mongo, "d", "localhost", "Specify where the mongodb is located")
 	flag.StringVar(&localhost, "host", "localhost", "Specify the name of the host")
 	flag.Parse()
 
@@ -28,7 +30,7 @@ func main() {
 
 	server = "http://" + localhost + ":" + localport
 	//for docker
-	DatabaseInit("mcfly", "mongodb://mongodb:27017/")
+	DatabaseInit("mcfly", "mongodb://"+mongo+":27017/")
 	//for localhost
 	//DatabaseInit("mcfly", "mongodb://localhost:27017/")
 	router := NewRouter()
